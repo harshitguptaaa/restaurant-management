@@ -40,16 +40,16 @@ export default {
 </script>
 
 <style>
-h1 {
-  text-align: center;
-  color: whitesmoke;
-  font-size: 2em;
-}
 .logo {
   width: 100px;
   height: auto;
   display: block;
   margin: 0 auto;
+}
+h1 {
+  color: whitesmoke;
+  font-size: 2em;
+  text-align: center;
 }
 .register input {
   width: 300px;
