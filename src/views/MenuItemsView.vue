@@ -1,36 +1,39 @@
 <!-- src/views/MenuItemsView.vue -->
 <template>
-  <div class="menu-page">
-    <h1>📋 Menu Items</h1>
+  <MainLayout>
+    <div class="menu-page">
+      <h1>📋 Menu Items</h1>
 
-    <form class="menu-form" @submit.prevent="addItem">
-      <input v-model="name" type="text" placeholder="Item Name" required />
-      <input v-model="price" type="number" min="1" placeholder="Price (₹)" required />
-      <button type="submit">Add Item</button>
-    </form>
+      <form class="menu-form" @submit.prevent="addItem">
+        <input v-model="name" type="text" placeholder="Item Name" required />
+        <input v-model="price" type="number" min="1" placeholder="Price (₹)" required />
+        <button type="submit">Add Item</button>
+      </form>
 
-    <table class="menu-table" v-if="menuItems.length">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in menuItems" :key="index">
-          <td>{{ item.name }}</td>
-          <td>₹{{ item.price }}</td>
-          <td><button @click="removeItem(index)">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="menu-table" v-if="menuItems.length">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in menuItems" :key="index">
+            <td>{{ item.name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td><button @click="removeItem(index)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
 
-    <p v-else class="no-items">No menu items added yet.</p>
-  </div>
+      <p v-else class="no-items">No menu items added yet.</p>
+    </div>
+  </MainLayout>
 </template>
 
 <script setup lang="ts">
+import MainLayout from '@/layouts/MainLayout.vue'
 import { ref } from 'vue'
 
 interface MenuItem {

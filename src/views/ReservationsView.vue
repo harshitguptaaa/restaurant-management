@@ -1,42 +1,45 @@
 <!-- src/views/ReservationsView.vue -->
 <template>
-  <div class="reservations-page">
-    <h1>📅 Table Reservations</h1>
+  <MainLayout>
+    <div class="reservations-page">
+      <h1>📅 Table Reservations</h1>
 
-    <form class="reservation-form" @submit.prevent="addReservation">
-      <input v-model="name" type="text" placeholder="Customer Name" required />
-      <input v-model="date" type="date" required />
-      <input v-model="time" type="time" required />
-      <input v-model="people" type="number" min="1" placeholder="No. of People" required />
-      <button type="submit">Add Reservation</button>
-    </form>
+      <form class="reservation-form" @submit.prevent="addReservation">
+        <input v-model="name" type="text" placeholder="Customer Name" required />
+        <input v-model="date" type="date" required />
+        <input v-model="time" type="time" required />
+        <input v-model="people" type="number" min="1" placeholder="No. of People" required />
+        <button type="submit">Add Reservation</button>
+      </form>
 
-    <table class="reservations-table" v-if="reservations.length">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>People</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(res, index) in reservations" :key="index">
-          <td>{{ res.name }}</td>
-          <td>{{ res.date }}</td>
-          <td>{{ res.time }}</td>
-          <td>{{ res.people }}</td>
-          <td><button @click="cancelReservation(index)">Cancel</button></td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="reservations-table" v-if="reservations.length">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>People</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(res, index) in reservations" :key="index">
+            <td>{{ res.name }}</td>
+            <td>{{ res.date }}</td>
+            <td>{{ res.time }}</td>
+            <td>{{ res.people }}</td>
+            <td><button @click="cancelReservation(index)">Cancel</button></td>
+          </tr>
+        </tbody>
+      </table>
 
-    <p v-else class="no-res">No reservations yet.</p>
-  </div>
+      <p v-else class="no-res">No reservations yet.</p>
+    </div>
+  </MainLayout>
 </template>
 
 <script setup lang="ts">
+import MainLayout from '@/layouts/MainLayout.vue'
 import { ref } from 'vue'
 
 interface Reservation {

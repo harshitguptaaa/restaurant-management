@@ -1,43 +1,46 @@
 <!-- src/views/StaffView.vue -->
 <template>
-  <div class="staff-page">
-    <h1>👨‍🍳 Staff Management</h1>
+  <MainLayout>
+    <div class="staff-page">
+      <h1>👨‍🍳 Staff Management</h1>
 
-    <form class="staff-form" @submit.prevent="addStaff">
-      <input v-model="name" type="text" placeholder="Name" required />
-      <select v-model="role" required>
-        <option disabled value="">Select Role</option>
-        <option>Chef</option>
-        <option>Waiter</option>
-        <option>Manager</option>
-        <option>Cleaner</option>
-      </select>
-      <button type="submit">Add Staff</button>
-    </form>
+      <form class="staff-form" @submit.prevent="addStaff">
+        <input v-model="name" type="text" placeholder="Name" required />
+        <select v-model="role" required>
+          <option disabled value="">Select Role</option>
+          <option>Chef</option>
+          <option>Waiter</option>
+          <option>Manager</option>
+          <option>Cleaner</option>
+        </select>
+        <button type="submit">Add Staff</button>
+      </form>
 
-    <table class="staff-table" v-if="staffList.length">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(staff, index) in staffList" :key="index">
-          <td>{{ staff.name }}</td>
-          <td>{{ staff.role }}</td>
-          <td><button @click="removeStaff(index)">Remove</button></td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="staff-table" v-if="staffList.length">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(staff, index) in staffList" :key="index">
+            <td>{{ staff.name }}</td>
+            <td>{{ staff.role }}</td>
+            <td><button @click="removeStaff(index)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
 
-    <p v-else class="no-staff">No staff added yet.</p>
-  </div>
+      <p v-else class="no-staff">No staff added yet.</p>
+    </div>
+  </MainLayout>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 
 interface Staff {
   name: string
