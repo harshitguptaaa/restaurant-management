@@ -1,14 +1,21 @@
 <template>
-  <div class="home-container">
-    <SidebarView />
-    <h1>🍽️ Restaurant Management System</h1>
-    <p>Welcome, {{ username }}!</p>
+  <div class="home-layout">
+    <!-- Sidebar -->
+    <SidebarView v-if="isSidebarOpen" @close="isSidebarOpen = false" />
 
-    <div class="nav-cards">
-      <div class="card">Manage Orders</div>
-      <div class="card">Table Reservations</div>
-      <div class="card">Menu Items</div>
-      <div class="card">Staff Management</div>
+    <!-- Main content -->
+    <div class="home-content" :class="{ shifted: isSidebarOpen }">
+      <!-- Toggle button (☰) for opening sidebar -->
+      <button class="hamburger-btn" v-if="!isSidebarOpen" @click="isSidebarOpen = true">☰</button>
+
+      <h1>🍽️ Restaurant Management System</h1>
+
+      <div class="nav-cards">
+        <div class="card"><router-link to="/orders">Manage Orders</router-link></div>
+        <div class="card"><router-link to="/reservations">Table Reservations</router-link></div>
+        <div class="card"><router-link to="/menu">Menu Items</router-link></div>
+        <div class="card"><router-link to="/staff">Staff Management</router-link></div>
+      </div>
     </div>
   </div>
 </template>
@@ -17,40 +24,78 @@
 import { ref } from 'vue'
 import SidebarView from '@/components/SidebarView.vue'
 
-// This is just a placeholder, ideally this would come from login or a store
-const username = ref('Manager')
+const isSidebarOpen = ref(true)
 </script>
 
 <style scoped>
-.home-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 2rem;
+h1 {
   text-align: center;
-  color: #333;
+  margin-top: 2rem;
+  color: #2c3e50;
+  white-space: nowrap;
 }
 
-h1 {
-  color: #2c3e50;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.home-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.home-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.home-content.shifted {
+  margin-left: 220px;
+}
+
+.hamburger-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  background: #2c3e50;
+  color: white;
+  font-size: 1.5rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.hamburger-btn:hover {
+  background: #1a242f;
 }
 
 .nav-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
+  justify-content: center;
   margin-top: 2rem;
 }
 
 .card {
+  width: 200px;
   background-color: #f8f8f8;
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: 1rem;
+  border-radius: 1px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   cursor: pointer;
+  text-align: left;
 }
+.card a {
+  color: #cc396a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
 .card:hover {
   transform: translateY(-4px);
   background-color: #e6f4ff;
