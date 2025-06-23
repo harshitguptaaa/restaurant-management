@@ -32,7 +32,7 @@ export default {
         if (result.data.length > 0) {
           alert('Login successful!')
           localStorage.setItem('user-info', JSON.stringify(result.data[0]))
-          this.$router.push('/menu') // redirect after login
+          this.$router.push('/home') // redirect after login
         } else {
           alert('Invalid email or password')
         }
