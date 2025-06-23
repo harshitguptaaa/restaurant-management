@@ -2,46 +2,50 @@
   <h1>Welcome to the Restaurant Management System</h1>
   <img src="@/assets/logo.avif" alt="Logo" class="logo" />
   <div class="register">
-    <input v-model="username" type="text" placeholder="Username" />
     <input v-model="email" type="email" placeholder="Email" />
     <input v-model="password" type="password" placeholder="Password" />
-    <button type="submit" v-on:click="signUp">Sign Up</button>
-    <p>Please sign up or log in to continue.</p>
-    <p>Already have an account? <router-link to="/login">Login</router-link></p>
+    <button type="submit" v-on:click="login">Login</button>
+    <p>
+      Don't have an account?
+      <router-link to="/">Sign Up</router-link>
+    </p>
   </div>
 </template>
 
 <script lang="ts">
 import axios from 'axios'
+
 export default {
-  name: 'SignUp-Page',
+  name: 'Login-Page',
   data() {
     return {
-      username: '',
       email: '',
       password: '',
     }
   },
   methods: {
-    async signUp() {
-      const result = await axios.post('http://localhost:3000/users', {
-        name: this.username,
-        email: this.email,
-        password: this.password,
-      })
-      console.warn(result)
-      if (result.status === 201) {
-        alert('User created successfully!')
-        localStorage.setItem('user-info', JSON.stringify(result.data))
-      } else {
-        alert('Error creating user')
+    async login() {
+      try {
+        const result = await axios.get(
+          `http://localhost:3000/users?email=${this.email}&password=${this.password}`,
+        )
+        if (result.data.length > 0) {
+          alert('Login successful!')
+          localStorage.setItem('user-info', JSON.stringify(result.data[0]))
+          this.$router.push('/menu') // redirect after login
+        } else {
+          alert('Invalid email or password')
+        }
+      } catch (err) {
+        console.error('Login error:', err)
+        alert('Login failed')
       }
     },
   },
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
   color: whitesmoke;
   font-size: 2em;
